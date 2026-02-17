@@ -5,7 +5,7 @@ metadata:
   labels:
     app: usedcar
 spec:
-  replicas: 2  # This ensures high availability (2 copies of your app)
+  replicas: 2  # for 2 copies
   selector:
     match_labels:
       app: usedcar
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: usedcar-app
-        image: YOUR_DOCKER_HUB_ID/used-car-app:v1  # Replace with your Docker ID
+        image: YOUR_DOCKER_HUB_ID/used-car-app:v1  # Replace with your Docker ID (this is demo that's why i dont add mine)
         ports:
         - containerPort: 8080
         env:
