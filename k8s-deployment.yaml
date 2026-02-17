@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usedcar-deployment
+  labels:
+    app: usedcar
+spec:
+  replicas: 2  # This ensures high availability (2 copies of your app)
+  selector:
+    match_labels:
+      app: usedcar
+  template:
+    metadata:
+      labels:
+        app: usedcar
+    spec:
+      containers:
+      - name: usedcar-app
+        image: YOUR_DOCKER_HUB_ID/used-car-app:v1  # Replace with your Docker ID
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:mysql://mysql-service:3306/usedcar"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: usedcar-service
+spec:
+  type: LoadBalancer  # This exposes your app to the internet
+  selector:
+    app: usedcar
+  ports:
+    - port: 80
+      targetPort: 8080
